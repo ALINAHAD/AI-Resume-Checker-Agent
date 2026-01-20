@@ -1,0 +1,149 @@
+{
+    "name": "Extract_Resume_Link",
+    "flow": [
+        {
+            "id": 1,
+            "module": "regexp:Parser",
+            "version": 1,
+            "parameters": {
+                "global": false,
+                "pattern": "(?<resume_link>https:\\/\\/docs\\.google\\.com\\/document\\/d\\/[a-zA-Z0-9_-]+\\/[\\w\\W]*?)(?:\\s|$)",
+                "multiline": true,
+                "sensitive": false,
+                "singleline": false,
+                "continueWhenNoRes": false
+            },
+            "mapper": {
+                "text": "{{var.input.User_Message}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -106,
+                    "y": -9
+                },
+                "restore": {},
+                "parameters": [
+                    {
+                        "name": "pattern",
+                        "type": "text",
+                        "label": "Pattern",
+                        "required": true
+                    },
+                    {
+                        "name": "global",
+                        "type": "boolean",
+                        "label": "Global match",
+                        "required": true
+                    },
+                    {
+                        "name": "sensitive",
+                        "type": "boolean",
+                        "label": "Case sensitive",
+                        "required": true
+                    },
+                    {
+                        "name": "multiline",
+                        "type": "boolean",
+                        "label": "Multiline",
+                        "required": true
+                    },
+                    {
+                        "name": "singleline",
+                        "type": "boolean",
+                        "label": "Singleline",
+                        "required": true
+                    },
+                    {
+                        "name": "continueWhenNoRes",
+                        "type": "boolean",
+                        "label": "Continue the execution of the route even if the module finds no matches",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "text",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "resume_link",
+                        "type": "text",
+                        "label": "resume_link"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "scenario-service:ReturnData",
+            "version": 2,
+            "parameters": {},
+            "mapper": {
+                "Resume_Link": "{{1.resume_link}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 194,
+                    "y": -9
+                },
+                "restore": {},
+                "expect": [
+                    {
+                        "name": "Resume_Link",
+                        "type": "text",
+                        "label": "",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    },
+    "io": {
+        "input_spec": [
+            {
+                "help": "",
+                "name": "User_Message",
+                "type": "text",
+                "label": "",
+                "default": "",
+                "required": true,
+                "multiline": true
+            }
+        ],
+        "output_spec": [
+            {
+                "help": "",
+                "name": "Resume_Link",
+                "type": "text",
+                "label": "",
+                "default": "",
+                "required": true,
+                "multiline": false
+            }
+        ]
+    }
+}
